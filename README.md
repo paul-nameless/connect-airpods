@@ -5,13 +5,13 @@ You can compile script and run it from spotlight
 ## Build
 
 ```
-swiftc main.swift
+swiftc main.swift -o airpods
 ```
 
 ## Usage
 
 ```
-./main "Paul’s AirPods"
+./airpods "Paul’s AirPods"
 ```
 
 ## How to use it as App in spotlight
