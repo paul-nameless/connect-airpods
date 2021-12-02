@@ -27,11 +27,39 @@ func pairDevice(byName deviceName: String) {
     print("Didn't find device with given name: \(deviceName)")
 }
 
-let deviceName: String
-if CommandLine.arguments.count >= 2 {
-    deviceName = CommandLine.arguments[1]
-} else {
-    deviceName = "Paul’s AirPods"
+func listDevices() {
+    guard let devices = IOBluetoothDevice.pairedDevices() else {
+        print("No devices.")
+        return
+    }
+    if (devices.count == 0) {
+        print("No devices.")
+        return
+    }
+    for item in devices {
+        if let device = item as? IOBluetoothDevice {
+            if device.name == nil {
+                continue
+            }
+            print(device.name ?? "")
+        }
+    }
 }
 
-pairDevice(byName: deviceName)
+let arg: String
+if CommandLine.arguments.count >= 2 {
+    arg = CommandLine.arguments[1]
+} else {
+    arg = ""
+}
+
+switch arg {
+    case "list":
+        listDevices()
+
+    case "", "help":
+        print("Usage: connect [list|DEVICE_NAME|help]")
+
+    default:
+        pairDevice(byName: arg)
+}
